@@ -1,5 +1,6 @@
 package com.kellahselai.game;
 
+import com.kellahselai.display.Display;
 import com.kellahselai.graphics.Sprite;
 import com.kellahselai.graphics.SpriteSheet;
 import com.kellahselai.graphics.TextureAtlas;
@@ -18,20 +19,38 @@ public class Player extends Entity {
     public static final int SPRITE_SCALE=16;
     public static final int SPRITES_PER_HEADING = 1;
 
+    //tmp
+    public static int ANIMATION=0;
+
+
+
+
 
     private enum Heading {
+
+
         NORTH(0 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
         EAST(6 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
         SOUTH(4 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
-        WEST(2 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE);
+        WEST(2 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
+
+        NORTH_AN(1 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
+        EAST_AN(7 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
+        SOUTH_AN(5 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE),
+        WEST_AN(3 * SPRITE_SCALE, 0 * SPRITE_SCALE, 1 * SPRITE_SCALE, 1 * SPRITE_SCALE);
+
+
 
         private int x, y, h, w;
 
         Heading(int x, int y, int h, int w)        {
+
+
             this.x = x;
             this.y = y;
             this.h = h;
             this.w = w;
+
         }
         protected BufferedImage texture(TextureAtlas atlas){
             return atlas.cut(x,y,w,h);
@@ -47,6 +66,9 @@ public class Player extends Entity {
     public Player(float x, float y,float scale,float speed, TextureAtlas atlas) {
         super(EntityType.Player,x,y);
 
+
+
+
         heading= Heading.NORTH;
         spriteMap=new HashMap<Heading,Sprite>();
         this.scale=scale;
@@ -58,24 +80,65 @@ public class Player extends Entity {
 
         }
 
+
     }
+
+
+
+
+
     public void update(Input input){
+
+        ANIMATION++;
+
+
+
+
+
 
         float newX = x;
         float newY = y;
 
         if(input.getKey(KeyEvent.VK_UP)){
             newY-=speed;
-            heading=Heading.NORTH;
+            //heading=Heading.NORTH;
+            if(ANIMATION>10){
+                heading=Heading.NORTH_AN;
+            }
+            if(ANIMATION>20){
+                heading=Heading.NORTH;
+                ANIMATION=0;
+            }
         }else if(input.getKey(KeyEvent.VK_RIGHT)) {
             newX += speed;
-            heading=Heading.EAST;
+            //heading=Heading.EAST;
+            if(ANIMATION>10){
+                heading=Heading.EAST_AN;
+            }
+            if(ANIMATION>20){
+                heading=Heading.EAST;
+                ANIMATION=0;
+            }
         }else if(input.getKey(KeyEvent.VK_DOWN)) {
             newY += speed;
-            heading=Heading.SOUTH;
+            //=Heading.SOUTH;
+            if(ANIMATION>10){
+                heading=Heading.SOUTH_AN;
+            }
+            if(ANIMATION>20){
+                heading=Heading.SOUTH;
+                ANIMATION=0;
+            }
         }else if(input.getKey(KeyEvent.VK_LEFT)) {
             newX -= speed;
-            heading=Heading.WEST;
+            //heading=Heading.WEST;
+            if(ANIMATION>10){
+                heading=Heading.WEST_AN;
+            }
+            if(ANIMATION>20){
+                heading=Heading.WEST;
+                ANIMATION=0;
+            }
         }
 
             if(newX < 0){
