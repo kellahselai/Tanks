@@ -10,6 +10,7 @@ import com.kellahselai.io.Input;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 /**
@@ -47,14 +48,14 @@ public class Game implements Runnable{
 
 
 
-    public Game(){
+    public Game()  {
         running=false;
         Display.create(WIDTH,HEIGHT,TITLE,CLEAR_COLOR,NUM_BUFFERS);
         graphics=Display.getGraphics();
         input = new Input();
         Display.addInputListener(input);
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
-        player = new Player(300,300,3,3,atlas);
+        player = new Player(300,300,2,3,atlas);
         lvl= new Level(atlas);
 
 
@@ -103,6 +104,7 @@ public class Game implements Runnable{
 
         lvl.render(graphics);
         player.render(graphics);
+        lvl.renderGrass(graphics);
 
         Display.swapBuffers();
     }
