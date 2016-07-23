@@ -1,6 +1,7 @@
 package com.kellahselai.game;
 
 import com.kellahselai.display.Display;
+import com.kellahselai.game.level.Level;
 import com.kellahselai.graphics.Sprite;
 import com.kellahselai.graphics.SpriteSheet;
 import com.kellahselai.graphics.TextureAtlas;
@@ -34,6 +35,9 @@ public class Game implements Runnable{
     private Input input;
     private TextureAtlas atlas;
     private Player player;
+    private Level lvl;
+
+
 
 
 
@@ -51,6 +55,7 @@ public class Game implements Runnable{
         Display.addInputListener(input);
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
         player = new Player(300,300,3,3,atlas);
+        lvl= new Level(atlas);
 
 
 
@@ -89,13 +94,14 @@ public class Game implements Runnable{
     private void update(){
 
         player.update(input);
+        lvl.update();
 
 
     }
     private void render(){
         Display.clear();
 
-
+        lvl.render(graphics);
         player.render(graphics);
 
         Display.swapBuffers();
